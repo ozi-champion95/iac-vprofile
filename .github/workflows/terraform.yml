@@ -63,7 +63,8 @@ jobs:
       - name: Terraform "Apply
         id: apple
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false - parallelism=1 planfile
+        run: terraform apply -auto-approve -input=false -parallelism=1 planfile
+
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -80,3 +81,6 @@ jobs:
       - name: Install Ingress controller 
         if: steps.apple.outcome == 'success' && steps.getconfig.outcome == 'success'
         run: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-inginx/controller-v1.1.3
+
+        ###
+        ###
